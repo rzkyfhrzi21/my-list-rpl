@@ -1,6 +1,6 @@
 <?php
 define("NAMA_WEB", "To Do List");
-define("NAMA_LENGKAP", "To Do List");
+define("NAMA_LENGKAP", "Adinata");
 define("IG", "lailansvh");
 define("EMAIL", "lailanurmasv@gmail.com");
 define("NO_WA", "085162642703");

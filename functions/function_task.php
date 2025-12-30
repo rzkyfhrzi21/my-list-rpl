@@ -57,31 +57,42 @@ if (isset($_POST['btn_add'])) {
 */
 if (isset($_POST['btn_edit'])) {
 
-    $id_task     = $_POST['id'];
-    $name        = trim($_POST['name']);
-    $description = trim($_POST['description']);
-    $category    = trim($_POST['category']);
-    $priority    = trim($_POST['priority']);
+    $id_task     = $_POST['id'] ?? null;
+    $name        = trim($_POST['name'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+    $category    = trim($_POST['category'] ?? '');
+    $priority    = trim($_POST['priority'] ?? '');
     $deadline    = $_POST['deadline'] ?? null;
     $reminder    = $_POST['reminder'] ?? null;
 
-    if (!$id_task || !$name) {
-        header("Location: ../index.php?page=dashboard&action=update&result=error");
+    // VALIDASI WAJIB
+    if (empty($id_task) || empty($name)) {
+        header("Location: ../index.php?page=dashboard&action=update&result=idkosong");
         exit;
     }
 
-    mysqli_query($koneksi, "
+    // normalisasi datetime
+    $deadlineSql = !empty($deadline) ? "'$deadline'" : "NULL";
+    $reminderSql = !empty($reminder) ? "'$reminder'" : "NULL";
+
+    $query = "
         UPDATE tasks SET
-            name        = '$name',
+            name = '$name',
             description = '$description',
-            category    = '$category',
-            priority    = '$priority',
-            deadline    = " . ($deadline ? "'$deadline'" : "NULL") . ",
-            reminder    = " . ($reminder ? "'$reminder'" : "NULL") . ",
-            updated_at  = NOW()
+            category = '$category',
+            priority = '$priority',
+            deadline = $deadlineSql,
+            reminder = $reminderSql,
+            updated_at = NOW()
         WHERE id_task = '$id_task'
-        AND id_user = '$sesi_id'
-    ");
+          AND id_user = '$sesi_id'
+    ";
+
+    $update = mysqli_query($koneksi, $query);
+
+    if (!$update) {
+        die("ERROR QUERY: " . mysqli_error($koneksi));
+    }
 
     header("Location: ../index.php?page=dashboard&action=update&result=success");
     exit;

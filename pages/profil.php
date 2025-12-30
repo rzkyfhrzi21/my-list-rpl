@@ -92,7 +92,7 @@ $email          = $users['email'] ?? '';
                     <h5 class="card-title">Informasi Pribadi</h5>
                 </div>
                 <div class="card-body">
-                    <form action="../functions/function_user.php" method="post" data-parsley-validate>
+                    <form action="functions/function_user.php" method="post" data-parsley-validate>
 
                         <div class="row form-group mandatory has-icon-left">
                             <div class="col-md-6 col-12">
@@ -132,7 +132,7 @@ $email          = $users['email'] ?? '';
                         <input type="hidden" name="id_user" value="<?= htmlspecialchars($id_user); ?>">
                         <div class="form-group">
                             <button type="submit" name="btn_editdatapribadi" class="btn btn-primary">Simpan Data Pribadi</button>
-                            <a href="../dashboard/" class="btn btn-secondary">Kembali</a>
+                            <a href="?page=dashboard" class="btn btn-secondary">Kembali</a>
                         </div>
                     </form>
                 </div>
