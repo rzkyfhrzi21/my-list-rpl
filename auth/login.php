@@ -1,7 +1,6 @@
 <?php
 require_once '../functions/config.php';
 
-session_start();
 if (@$_SESSION['sesi_id']) {
     header('Location: ../index');
     exit();
@@ -68,8 +67,8 @@ $emailLogin = isset($_GET['email']) ? $_GET['email'] : '';
             <div class="row h-100">
                 <div class="card mt-5">
                     <div class="card-header">
-                        <h2 class="auth-title text-danger">Log In Akun</h2>
-                        <p class="auth-subtitle mb-2">Hi, Selamat datang #PahlawanDarah</p>
+                        <h2 class="auth-title text-danger">Login Akun</h2>
+                        <p class="auth-subtitle mb-2">Kelola aktivitas dan tugas Anda dengan lebih mudah</p>
                     </div>
                     <div class="card-body">
                         <form class="form" data-parsley-validate action="../functions/function_auth.php" method="post" autocomplete="off">
@@ -77,7 +76,7 @@ $emailLogin = isset($_GET['email']) ? $_GET['email'] : '';
                                 <label for="email" class="form-label">Email</label>
                                 <div class="position-relative">
                                     <input type="email" name="email" class="form-control form-control-xl"
-                                        placeholder="Email" value="<?= $emailLogin; ?>" id="email" data-parsley-required="true" minlength="5">
+                                        placeholder="Email" value="<?= $emailLogin; ?>" id="email" data-parsley-required="true" minlength="5" required>
                                     <div class="form-control-icon">
                                         <i class="bi bi-person"></i>
                                     </div>
@@ -94,10 +93,15 @@ $emailLogin = isset($_GET['email']) ? $_GET['email'] : '';
                             </div>
                             <input type="hidden" name="role" value="wisatawan">
 
-                            <button name="btn_login" type="submit" class="btn btn-danger btn-block btn-lg shadow-lg mt-2">Log In</button>
+                            <button name="btn_login" type="submit" class="btn btn-danger btn-block btn-lg shadow-lg mt-2">Masuk ke Dashboard
+                            </button>
                         </form>
                         <div class="text-center mt-3 text-lg fs-4">
-                            <p class="text-gray-600">Tidak mempunyai akun? <a href="register" class="font-bold text-danger">Daftar</a>.</p>
+                            <p class="text-gray-600">
+                                Belum punya akun?
+                                <a href="register" class="font-bold text-danger">Daftar sekarang</a>
+                            </p>
+
                         </div>
                     </div>
                 </div>
@@ -119,7 +123,7 @@ $emailLogin = isset($_GET['email']) ? $_GET['email'] : '';
                 Swal.fire({
                     icon: "success",
                     title: "Berhasil!",
-                    text: "Akun berhasil terdaftar. Silakan login 😁",
+                    text: "Akun berhasil dibuat. Silakan login untuk mulai mengelola tugas Anda.",
                     timer: 3000,
                     showConfirmButton: false,
                 });

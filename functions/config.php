@@ -1,31 +1,41 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once 'env.php';
+
 
 date_default_timezone_set('Asia/Jakarta');
 $pukul = date('H:i A');
 
-// Memeriksa apakah link adalah localhost
+// Deteksi server
 $host = $_SERVER['HTTP_HOST'];
 if ($host === 'localhost' || strpos($host, '127.0.0.1') !== false) {
-    // Untuk penggunaan xampp
     $server     = 'localhost';
     $username   = 'root';
     $password   = '';
     $database   = 'my-list';
 } else {
-    // Untuk penggunaan hosting
     $server     = '';
     $username   = '';
     $password   = '';
     $database   = '';
 }
 
-$koneksi    = mysqli_connect($server, $username, $password, $database);
+$koneksi = mysqli_connect($server, $username, $password, $database);
 
 if (!$koneksi) {
     die('Koneksi gagal: ' . mysqli_connect_error());
 }
 
+/* SESSION GLOBAL */
+$sesi_id = $_SESSION['sesi_id'] ?? null;
+
+
+/* ==========================
+   HELPER FORMAT TANGGAL
+========================== */
 if (!function_exists('formatTanggalIndonesia')) {
     function formatTanggalIndonesia($tanggalInggris)
     {
@@ -55,12 +65,10 @@ if (!function_exists('formatTanggalIndonesia')) {
         ];
 
         $date = new DateTime($tanggalInggris);
-        $hariInggris = $date->format('l');
-        $bulanInggris = $date->format('F');
 
-        $hariIndonesia = $namaHari[$hariInggris];
-        $bulanIndonesia = $namaBulan[$bulanInggris];
-
-        return $hariIndonesia . ', ' . $date->format('d') . ' ' . $bulanIndonesia . ' ' . $date->format('Y');
+        return $namaHari[$date->format('l')] . ', ' .
+            $date->format('d') . ' ' .
+            $namaBulan[$date->format('F')] . ' ' .
+            $date->format('Y');
     }
 }

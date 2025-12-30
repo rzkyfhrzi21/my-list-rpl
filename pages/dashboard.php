@@ -78,7 +78,8 @@ function filterUrl($newStatus = null, $newPriority = null)
             <div class="card widget-todo">
                 <div class="card-header border-bottom d-flex justify-content-between align-items-center">
                     <h4 class="card-name d-flex">
-                        <i class="bx bx-check font-medium-5 pl-25 pr-75"></i> Tasks
+                        <i class="bx bx-check font-medium-5 pl-25 pr-75"></i>
+                        To-do List
                     </h4>
                 </div>
 
@@ -166,7 +167,7 @@ function filterUrl($newStatus = null, $newPriority = null)
                                             <?= $taskStatus === 'selesai' ? 'checked' : '' ?>>
 
                                         <div class="d-flex flex-column">
-                                            <label for="task-1" class="widget-todo-name fw-bold mb-25">
+                                            <label class="widget-todo-name fw-bold mb-25">
                                                 <?= $taskName; ?>
                                             </label>
 
@@ -240,7 +241,7 @@ function filterUrl($newStatus = null, $newPriority = null)
 
 <div class="modal fade" id="modalEditTask" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <form method="post" action="function_task.php" class="modal-content">
+        <form method="post" action="functions/function_task.php" class="modal-content">
 
             <div class="modal-header">
                 <h5 class="modal-name">Detail Task</h5>
@@ -302,7 +303,7 @@ function filterUrl($newStatus = null, $newPriority = null)
 
 <div class="modal fade" id="modalDeleteTask" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <form method="post" action="function_task.php" class="modal-content">
+        <form method="post" action="functions/function_task.php" class="modal-content">
 
             <div class="modal-header">
                 <h5 class="modal-name text-danger">Hapus Task</h5>
@@ -328,42 +329,50 @@ function filterUrl($newStatus = null, $newPriority = null)
 <script>
     document.addEventListener("DOMContentLoaded", function() {
 
-        // =============================
-        // EDIT MODAL
-        // =============================
+        /* ===============================
+           MODAL EDIT TASK
+        =============================== */
         document.querySelectorAll('[data-bs-target="#modalEditTask"]').forEach(btn => {
             btn.addEventListener("click", function() {
+
                 document.getElementById("edit-id").value = this.dataset.id;
                 document.getElementById("edit-name").value = this.dataset.name;
                 document.getElementById("edit-category").value = this.dataset.category;
                 document.getElementById("edit-priority").value = this.dataset.priority;
-                document.getElementById("edit-deadline").value = (this.dataset.deadline || '').replace(" ", "T");
-                document.getElementById("edit-reminder").value = (this.dataset.reminder || '').replace(" ", "T");
-                document.getElementById("edit-description").value = this.dataset.description;
+                document.getElementById("edit-description").value = this.dataset.description || "";
+
+                if (this.dataset.deadline) {
+                    document.getElementById("edit-deadline").value =
+                        this.dataset.deadline.replace(" ", "T");
+                }
+
+                if (this.dataset.reminder) {
+                    document.getElementById("edit-reminder").value =
+                        this.dataset.reminder.replace(" ", "T");
+                }
             });
         });
 
-        // =============================
-        // DELETE MODAL
-        // =============================
+        /* ===============================
+           MODAL DELETE
+        =============================== */
         document.querySelectorAll('[data-bs-target="#modalDeleteTask"]').forEach(btn => {
             btn.addEventListener("click", function() {
                 document.getElementById("delete-id").value = this.dataset.id;
             });
         });
 
-        // =============================
-        // CHECKBOX AJAX TOGGLE STATUS
-        // =============================
+        /* ===============================
+           CHECKBOX → AJAX UPDATE STATUS
+        =============================== */
         document.addEventListener("change", function(e) {
             if (!e.target.classList.contains("task-checkbox")) return;
 
             const checkbox = e.target;
             const taskId = checkbox.dataset.id;
-            const oldStatus = checkbox.dataset.status;
             const newStatus = checkbox.checked ? "selesai" : "belum";
 
-            fetch("../functions/ajax_task.php", {
+            fetch("functions/ajax_task.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
@@ -373,27 +382,19 @@ function filterUrl($newStatus = null, $newPriority = null)
                 .then(res => res.json())
                 .then(data => {
                     if (!data.success) {
-                        checkbox.checked = (oldStatus === "selesai");
-                        alert(data.message || "Gagal mengubah status");
+                        checkbox.checked = !checkbox.checked;
+                        alert(data.message || "Gagal memperbarui status");
                         return;
                     }
 
-                    // update data-status
-                    checkbox.dataset.status = newStatus;
-
-                    // efek visual
-                    const item = checkbox.closest(".widget-todo-item");
-                    if (item) {
-                        if (newStatus === "selesai") {
-                            item.classList.add("completed");
-                        } else {
-                            item.classList.remove("completed");
-                        }
-                    }
+                    // refresh halaman agar badge & filter sinkron
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 250);
                 })
                 .catch(() => {
-                    checkbox.checked = (oldStatus === "selesai");
-                    alert("Koneksi gagal");
+                    checkbox.checked = !checkbox.checked;
+                    alert("Koneksi ke server gagal");
                 });
         });
 

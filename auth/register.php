@@ -1,11 +1,7 @@
 <?php
-require_once 'functions/config.php';
-
-session_start();
-
-$usernameLogin  =  isset($_GET['username']) ? $_GET['username'] : '';
+require_once '../functions/config.php';
+$emailLogin  =  isset($_GET['email']) ? $_GET['email'] : '';
 $nama_userLogin =  isset($_GET['nama_user']) ? $_GET['nama_user'] : '';
-
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +14,6 @@ $nama_userLogin =  isset($_GET['nama_user']) ? $_GET['nama_user'] : '';
     <meta name="robots" content="noindex, nofollow">
 
     <title>Registrasi - <?php echo NAMA_WEB ?></title>
-    <link rel="shortcut icon" href="../assets/pmi-bg.jpg" type="image/x-icon">
-
 
     <link rel="shortcut icon" href="../dashboard/assets/pmi.png" type="image/x-icon">
     <link rel="stylesheet" href="../dashboard/assets/compiled/css/app.css">
@@ -29,7 +23,6 @@ $nama_userLogin =  isset($_GET['nama_user']) ? $_GET['nama_user'] : '';
 
     <style>
         body {
-            /* background-image: url('../dashboard/assets/pmi-bg.jpg'); */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -66,58 +59,86 @@ $nama_userLogin =  isset($_GET['nama_user']) ? $_GET['nama_user'] : '';
             <div class="row h-100">
                 <div class="card mt-5">
                     <div class="card-header">
-                        <a href="../index" class="text-decoration-none">
-                            <p class="auth-subtitle text-s"><i class="bi bi-arrow-left"></i> <b>Beranda</b></p>
-                        </a>
-                        <h2 class="auth-title text-danger">Registrasi</h2>
-                        <p class="auth-subtitle mb-2">Hi, Ayo bergabung menjadi #PahlawanDarah</p>
+                        <h2 class="auth-title text-danger">Registrasi Akun</h2>
+                        <p class="auth-subtitle mb-2">
+                            Buat akun untuk mulai mengelola tugas dan aktivitas harian Anda
+                        </p>
                     </div>
+
                     <div class="card-body">
                         <form class="form" data-parsley-validate action="../functions/function_auth.php" method="post" autocomplete="off">
-                            <div class="form-group position-relative has-icon-left mb-3 has-icon-left">
-                                <label for="Nama Lengkap" class="form-label">Nama Lengkap</label>
+                            <div class="form-group position-relative has-icon-left mb-3">
+                                <label class="form-label">Nama Lengkap</label>
                                 <div class="position-relative">
-                                    <input type="text" name="nama_user" class="form-control form-control-xl"
-                                        placeholder="Nama lengkap anda" value="<?= $nama_userLogin; ?>" id="Nama Lengkap" data-parsley-required="true" minlength="5">
+                                    <input type="text"
+                                        name="name"
+                                        class="form-control form-control-xl"
+                                        placeholder="Nama lengkap Anda"
+                                        value="<?= $nama_userLogin; ?>"
+                                        required minlength="3">
                                     <div class="form-control-icon">
                                         <i class="bi bi-person"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group position-relative has-icon-left mb-3 has-icon-left">
-                                <label for="username" class="form-label">Username</label>
+
+                            <div class="form-group position-relative has-icon-left mb-3">
+                                <label class="form-label">Email</label>
                                 <div class="position-relative">
-                                    <input type="text" name="username" class="form-control form-control-xl"
-                                        placeholder="Username baru" value="<?= $usernameLogin; ?>" id="username" data-parsley-required="true" minlength="5">
+                                    <input type="email"
+                                        name="email"
+                                        class="form-control form-control-xl"
+                                        placeholder="Email"
+                                        value="<?= $emailLogin; ?>"
+                                        required minlength="5">
                                     <div class="form-control-icon">
-                                        <i class="bi bi-person"></i>
+                                        <i class="bi bi-person-badge"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group position-relative has-icon-left mb-3 has-icon-left">
-                                <label for="password" class="form-label">Password <label class="text-danger">*</label></label>
+
+                            <div class="form-group position-relative has-icon-left mb-3">
+                                <label class="form-label">Password</label>
                                 <div class="position-relative">
-                                    <input type="password" name="password" class="form-control form-control-xl" placeholder="*****" id="password" data-parsley-required="true" minlength="5">
+                                    <input type="password"
+                                        name="password"
+                                        class="form-control form-control-xl"
+                                        placeholder="Minimal 5 karakter"
+                                        required minlength="5">
                                     <div class="form-control-icon">
                                         <i class="bi bi-shield-lock"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group position-relative has-icon-left mb-3 has-icon-left">
-                                <label for="konfirmasi_password" class="form-label">Konfirmasi Password</label>
+
+                            <div class="form-group position-relative has-icon-left mb-3">
+                                <label class="form-label">Konfirmasi Password</label>
                                 <div class="position-relative">
-                                    <input type="password" name="konfirmasi_password" class="form-control form-control-xl"
-                                        placeholder="Konfirmasi password baru" id="konfirmasi_password" data-parsley-required="true" minlength="5">
+                                    <input type="password"
+                                        name="konfirmasi_password"
+                                        class="form-control form-control-xl"
+                                        placeholder="Ulangi password"
+                                        required minlength="5">
                                     <div class="form-control-icon">
                                         <i class="bi bi-shield-lock"></i>
                                     </div>
                                 </div>
                             </div>
+
                             <input type="hidden" name="role" value="wisatawan">
-                            <button type="submit" name="btn_register" class="btn btn-danger btn-block btn-lg shadow-lg mt-2">Registrasi</button>
+
+                            <button type="submit"
+                                name="btn_register"
+                                class="btn btn-danger btn-block btn-lg shadow-lg mt-2">
+                                Daftar Sekarang
+                            </button>
                         </form>
+
                         <div class="text-center mt-3 text-lg fs-4">
-                            <p class='text-gray-600'>Sudah mempunyai akun? <a href="login" class="font-bold text-danger">Masuk</a>.</p>
+                            <p class="text-gray-600">
+                                Sudah punya akun?
+                                <a href="login" class="font-bold text-danger">Masuk</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -129,6 +150,7 @@ $nama_userLogin =  isset($_GET['nama_user']) ? $_GET['nama_user'] : '';
     <script src="../dashboard/assets/extensions/parsleyjs/parsley.min.js"></script>
     <script src="../dashboard/assets/static/js/pages/parsley.js"></script>
     <script src="../dashboard/assets/extensions/sweetalert2/sweetalert2.min.js"></script>
+
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const status = urlParams.get("status");
@@ -138,16 +160,8 @@ $nama_userLogin =  isset($_GET['nama_user']) ? $_GET['nama_user'] : '';
             if (action === "registered") {
                 Swal.fire({
                     icon: "success",
-                    title: "Berhasil!",
-                    text: "Akun berhasil terdaftar. Silakan login 😁",
-                    timer: 3000,
-                    showConfirmButton: false,
-                });
-            } else if (action === "deleteuser") {
-                Swal.fire({
-                    icon: "success",
-                    title: "Berhasil!",
-                    text: "Akun anda telah berhasil dihapus 😁",
+                    title: "Registrasi Berhasil",
+                    text: "Akun berhasil dibuat. Silakan login untuk mulai mengelola tugas Anda.",
                     timer: 3000,
                     showConfirmButton: false,
                 });
@@ -156,8 +170,8 @@ $nama_userLogin =  isset($_GET['nama_user']) ? $_GET['nama_user'] : '';
             if (action === "login") {
                 Swal.fire({
                     icon: "error",
-                    title: "Gagal!",
-                    text: "Username atau password salah 🤬",
+                    title: "Login Gagal",
+                    text: "Username atau password tidak valid.",
                     timer: 3000,
                     showConfirmButton: false,
                 });

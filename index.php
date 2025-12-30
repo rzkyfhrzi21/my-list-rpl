@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once 'functions/config.php';
 
@@ -15,8 +14,8 @@ if ($sql = mysqli_query($koneksi, $query)) {
 }
 
 // Pastikan pengguna sudah login dan memiliki role admin
-if (!isset($_SESSION['sesi_id'])) {
-    header('Location: auth/login');
+if (!isset($_SESSION['sesi_id']) || empty($users)) {
+    header('Location: auth/logout');
     exit();
 }
 
@@ -32,7 +31,7 @@ $page = $_GET['page'] ?? 'dashboard'; // Default ke 'dashboard' jika tidak ada p
 
     <meta name="robots content=" noindex, nofollow">
 
-    <title>Dashboard | <?php echo NAMA_WEB ?></title>
+    <title><?= ucfirst($page); ?> | <?php echo NAMA_WEB ?></title>
 
     <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
 
@@ -131,9 +130,14 @@ $page = $_GET['page'] ?? 'dashboard'; // Default ke 'dashboard' jika tidak ada p
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="statistik" class='menu-link'>
+                                <a href="?page=statistik" class='menu-link'>
                                     <i class="bi bi-bar-chart-fill"></i>
                                     <span>Statistik</span>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="?page=registrasi" class='menu-link'>
+                                    <span><i class="select-all fas"></i> Registrasi</span>
                                 </a>
                             </li>
                             <li class="menu-item">
@@ -169,7 +173,7 @@ $page = $_GET['page'] ?? 'dashboard'; // Default ke 'dashboard' jika tidak ada p
                                 <i class="bx bx-x d-block d-sm-none"></i>
                                 <span class="d-none d-sm-block">Batal</span>
                             </button>
-                            <a href="../auth/logout" class="btn btn-danger ms-1">
+                            <a href="auth/logout" class="btn btn-danger ms-1">
                                 Logout
                             </a>
                         </div>
@@ -184,9 +188,6 @@ $page = $_GET['page'] ?? 'dashboard'; // Default ke 'dashboard' jika tidak ada p
                 switch ($page) {
                     case 'dashboard':
                         include 'pages/dashboard.php';
-                        break;
-                    case 'data admin':
-                        include 'pages/data_admin.php';
                         break;
                     case 'statistik':
                         include 'pages/statistik.php';
@@ -211,12 +212,12 @@ $page = $_GET['page'] ?? 'dashboard'; // Default ke 'dashboard' jika tidak ada p
                             <p>
                                 <script>
                                     document.write(new Date().getFullYear())
-                                </script> &copy; Donorku
+                                </script> &copy; <?= NAMA_WEB ?>
                             </p>
                         </div>
                         <div class="float-end">
                             <p>Dibuat dengan <span class="text-danger"><i class="bi bi-heart"></i></span>
-                                oleh <a href="https://www.instagram.com/fauziahzhraaa__/" target="_blank">Fauziah Zahra</a></p>
+                                oleh <a href="<?= URL_IG ?>" target="_blank"><?= NAMA_LENGKAP ?></a></p>
                         </div>
                     </div>
                 </div>

@@ -43,7 +43,6 @@ if (isset($_POST['btn_register'])) {
 			$query_daftar    = "INSERT into users 
                                     set email    = '$email',
                                         name   = '$name', 
-                                        role       	= '$role', 
                                         password    = '$password'";
 			$daftar         = mysqli_query($koneksi, $query_daftar);
 

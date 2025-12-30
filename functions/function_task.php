@@ -1,24 +1,23 @@
 <?php
 require_once 'config.php';
 
-/* ======================================================
-   TAMBAH TASK
-====================================================== */
-if (isset($_POST['btn_tambah'])) {
+/*
+|--------------------------------------------------------------------------
+| TAMBAH TASK
+|--------------------------------------------------------------------------
+*/
+if (isset($_POST['btn_add'])) {
 
     $id_user     = $sesi_id;
     $name        = trim($_POST['name']);
     $description = trim($_POST['description']);
     $category    = trim($_POST['category']);
     $priority    = trim($_POST['priority']);
-    $deadline    = $_POST['deadline'];
-    $reminder    = $_POST['reminder'];
+    $deadline    = $_POST['deadline'] ?? null;
+    $reminder    = $_POST['reminder'] ?? null;
 
-    // default status saat buat task
-    $status = 'belum';
-
-    if ($name == '' || $priority == '') {
-        header("Location: ../dashboard/{$sesi_role}?page=task&status=empty");
+    if ($name === '' || $priority === '') {
+        header("Location: ../index.php?page=dashboard&action=add&result=error");
         exit;
     }
 
@@ -32,27 +31,30 @@ if (isset($_POST['btn_tambah'])) {
             status,
             deadline,
             reminder,
-            dibuat_pada
+            created_at
         ) VALUES (
             '$id_user',
             '$name',
             '$description',
             '$category',
             '$priority',
-            '$status',
-            '$deadline',
-            '$reminder',
+            'belum',
+            " . ($deadline ? "'$deadline'" : "NULL") . ",
+            " . ($reminder ? "'$reminder'" : "NULL") . ",
             NOW()
         )
     ");
 
-    header("Location: ../dashboard/{$sesi_role}?page=task&status=success");
+    header("Location: ../index.php?page=dashboard&action=add&result=success");
     exit;
 }
 
-/* ======================================================
-   UPDATE TASK
-====================================================== */
+
+/*
+|--------------------------------------------------------------------------
+| UPDATE TASK
+|--------------------------------------------------------------------------
+*/
 if (isset($_POST['btn_edit'])) {
 
     $id_task     = $_POST['id'];
@@ -60,69 +62,52 @@ if (isset($_POST['btn_edit'])) {
     $description = trim($_POST['description']);
     $category    = trim($_POST['category']);
     $priority    = trim($_POST['priority']);
-    $deadline    = $_POST['deadline'];
-    $reminder    = $_POST['reminder'];
+    $deadline    = $_POST['deadline'] ?? null;
+    $reminder    = $_POST['reminder'] ?? null;
 
-    if ($id_task == '' || $name == '') {
-        header("Location: ../dashboard/{$sesi_role}?page=task&status=invalid");
+    if (!$id_task || !$name) {
+        header("Location: ../index.php?page=dashboard&action=update&result=error");
         exit;
     }
 
     mysqli_query($koneksi, "
         UPDATE tasks SET
-            name = '$name',
+            name        = '$name',
             description = '$description',
-            category = '$category',
-            priority = '$priority',
-            deadline = '$deadline',
-            reminder = '$reminder',
-            diubah_pada = NOW()
+            category    = '$category',
+            priority    = '$priority',
+            deadline    = " . ($deadline ? "'$deadline'" : "NULL") . ",
+            reminder    = " . ($reminder ? "'$reminder'" : "NULL") . ",
+            updated_at  = NOW()
         WHERE id_task = '$id_task'
-          AND id_user = '$sesi_id'
+        AND id_user = '$sesi_id'
     ");
 
-    header("Location: ../dashboard/{$sesi_role}?page=task&status=updated");
+    header("Location: ../index.php?page=dashboard&action=update&result=success");
     exit;
 }
 
-/* ======================================================
-   HAPUS TASK
-====================================================== */
+
+/*
+|--------------------------------------------------------------------------
+| DELETE TASK
+|--------------------------------------------------------------------------
+*/
 if (isset($_POST['btn_delete'])) {
 
     $id_task = $_POST['id'];
 
-    mysqli_query($koneksi, "
-        DELETE FROM tasks 
-        WHERE id_task = '$id_task' 
-        AND id_user = '$sesi_id'
-    ");
-
-    header("Location: ../dashboard/{$sesi_role}?page=task&status=deleted");
-    exit;
-}
-
-/* ======================================================
-   UPDATE STATUS TASK (BELUM ⇄ SELESAI)
-   dipakai kalau nanti checkbox diaktifkan
-====================================================== */
-if (isset($_POST['btn_toggle_status'])) {
-
-    $id_task = $_POST['id'];
-    $status  = $_POST['status']; // belum / selesai
-
-    if (!in_array($status, ['belum', 'selesai'])) {
-        header("Location: ../dashboard/{$sesi_role}?page=task&status=invalid");
+    if (!$id_task) {
+        header("Location: ../index.php?page=dashboard&action=delete&result=error");
         exit;
     }
 
     mysqli_query($koneksi, "
-        UPDATE tasks 
-        SET status = '$status', diubah_pada = NOW()
+        DELETE FROM tasks
         WHERE id_task = '$id_task'
         AND id_user = '$sesi_id'
     ");
 
-    header("Location: ../dashboard/{$sesi_role}?page=task&status=updated");
+    header("Location: ../index.php?page=dashboard&action=delete&result=success");
     exit;
 }
