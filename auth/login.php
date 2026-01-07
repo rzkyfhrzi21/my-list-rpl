@@ -22,15 +22,15 @@ $emailLogin = isset($_GET['email']) ? $_GET['email'] : '';
 
     <title>Login - <?php echo NAMA_WEB ?></title>
 
-    <link rel="shortcut icon" href="../dashboard/assets/pmi.png" type="image/x-icon">
-    <link rel="stylesheet" href="../dashboard/assets/compiled/css/app.css">
-    <link rel="stylesheet" href="../dashboard/assets/compiled/css/app-dark.css">
-    <link rel="stylesheet" href="../dashboard/assets/compiled/css/auth.css">
-    <link rel="stylesheet" href="../dashboard/assets/extensions/sweetalert2/sweetalert2.min.css">
+    <link rel="shortcut icon" href="../assets/pmi.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/compiled/css/app.css">
+    <link rel="stylesheet" href="../assets/compiled/css/app-dark.css">
+    <link rel="stylesheet" href="../assets/compiled/css/auth.css">
+    <link rel="stylesheet" href="../assets/extensions/sweetalert2/sweetalert2.min.css">
 
     <style>
         body {
-            /* background-image: url('../dashboard/assets/pmi-bg.jpg'); */
+            /* background-image: url('../assets/pmi-bg.jpg'); */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -60,7 +60,7 @@ $emailLogin = isset($_GET['email']) ? $_GET['email'] : '';
 </head>
 
 <body>
-    <script src="../dashboard/assets/static/js/initTheme.js"></script>
+    <script src="../assets/static/js/initTheme.js"></script>
 
     <div id="app">
         <div class="content-wrapper container">
@@ -109,10 +109,10 @@ $emailLogin = isset($_GET['email']) ? $_GET['email'] : '';
         </div>
     </div>
 
-    <script src="../dashboard/assets/extensions/jquery/jquery.min.js"></script>
-    <script src="../dashboard/assets/extensions/parsleyjs/parsley.min.js"></script>
-    <script src="../dashboard/assets/static/js/pages/parsley.js"></script>
-    <script src="../dashboard/assets/extensions/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../assets/extensions/jquery/jquery.min.js"></script>
+    <script src="../assets/extensions/parsleyjs/parsley.min.js"></script>
+    <script src="../assets/static/js/pages/parsley.js"></script>
+    <script src="../assets/extensions/sweetalert2/sweetalert2.min.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const status = urlParams.get("status");

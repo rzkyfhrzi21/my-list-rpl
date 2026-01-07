@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2025 at 04:30 AM
+-- Generation Time: Jan 07, 2026 at 02:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,6 +38,13 @@ CREATE TABLE `notifications` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `user_id`, `task_id`, `title`, `message`, `is_read`, `created_at`, `updated_at`) VALUES
+(5, 2, 6, 'Kerjakan Task 1', 'Ayo Selesaikan sebelum waktu deadline', 0, '2026-01-07 01:26:58', '2026-01-07 01:26:58');
+
 -- --------------------------------------------------------
 
 --
@@ -63,12 +70,10 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`id_task`, `id_user`, `name`, `description`, `category`, `priority`, `status`, `deadline`, `reminder`, `created_at`, `updated_at`) VALUES
-(6, 2, 'Tugas Kuliah RPL', 'Membuat UI Website RPL', 'Kuliah', 'tinggi', 'belum', '2025-01-11 00:01:00', '2025-12-31 00:01:00', '2025-12-30 02:58:08', '2025-12-30 03:24:53'),
-(8, 2, 'Kerjakan laporan RPL Bab 1', 'Susun latar belakang, rumusan masalah, dan tujuan penelitian.', 'Kuliah', 'tinggi', 'belum', '2025-12-31 23:59:00', '2025-12-31 20:00:00', '2025-12-30 03:26:25', '2025-12-30 03:26:25'),
-(9, 2, 'Revisi UI Dashboard To-do', 'Rapikan tampilan list, badge status/prioritas, dan tombol detail/hapus.', 'Project', 'sedang', 'belum', '2025-12-30 18:00:00', '2025-12-30 15:00:00', '2025-12-30 03:26:25', '2025-12-30 03:26:25'),
-(10, 2, 'Belajar MySQL JOIN', 'Latihan query JOIN untuk relasi users-tasks dan filtering.', 'Belajar', 'rendah', 'belum', '2026-01-02 10:00:00', '2026-01-02 08:30:00', '2025-12-30 03:26:25', '2025-12-30 03:26:25'),
-(11, 2, 'Push ke GitHub', 'Commit perubahan function_task.php, ajax_task.php, dan dashboard.php.', 'Project', 'sedang', 'selesai', '2025-12-29 21:00:00', '2025-12-29 19:30:00', '2025-12-30 03:26:25', '2025-12-30 03:29:14'),
-(12, 2, 'Backup database my-list', 'Export database sebelum melakukan perubahan struktur tabel.', 'Maintenance', 'rendah', 'selesai', '2025-12-28 22:00:00', '2025-12-28 21:30:00', '2025-12-30 03:26:25', '2025-12-30 03:29:12');
+(6, 2, 'Tugas 1', 'Mengerjakan tugas 1', 'Kuliah', 'rendah', 'belum', '2025-01-11 00:01:00', '2025-12-31 00:01:00', '2025-12-30 02:58:08', '2025-12-30 03:55:20'),
+(8, 2, 'Tugas 2', 'Mengerjakan tugas 2', 'Kuliah', 'sedang', 'belum', '2025-12-31 23:59:00', '2025-12-31 20:00:00', '2025-12-30 03:26:25', '2025-12-30 03:55:46'),
+(10, 2, 'Tugas 3', 'Mengerjakan tugas 3', 'Belajar', 'tinggi', 'belum', '2026-01-02 10:00:00', '2026-01-02 08:30:00', '2025-12-30 03:26:25', '2026-01-06 23:44:33'),
+(13, 2, 'Task 4', 'Task 4', 'Kuliah', 'tinggi', 'belum', '2026-01-07 22:44:00', '2026-01-07 06:43:00', '2026-01-06 23:43:56', '2026-01-06 23:58:25');
 
 -- --------------------------------------------------------
 
@@ -126,13 +131,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id_task` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_task` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `users`

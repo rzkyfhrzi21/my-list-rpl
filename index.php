@@ -130,14 +130,27 @@ $page = $_GET['page'] ?? 'dashboard'; // Default ke 'dashboard' jika tidak ada p
                                 </a>
                             </li>
                             <li class="menu-item">
+                                <a href="?page=task" class="menu-link">
+                                    <span><i class="bi bi-check2-square"></i> Task</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
                                 <a href="?page=statistik" class='menu-link'>
                                     <i class="bi bi-bar-chart-fill"></i>
                                     <span>Statistik</span>
                                 </a>
                             </li>
                             <li class="menu-item">
+                                <a href="?page=notifications" class="menu-link">
+                                    <i class="bi bi-bell-fill"></i>
+                                    <span>Pengingat Task</span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item">
                                 <a href="?page=registrasi" class='menu-link'>
-                                    <span><i class="select-all fas"></i> Registrasi</span>
+                                    <span><i class="select-all fas"></i> Registrasi User</span>
                                 </a>
                             </li>
                             <li class="menu-item">
@@ -181,19 +194,25 @@ $page = $_GET['page'] ?? 'dashboard'; // Default ke 'dashboard' jika tidak ada p
                 </div>
             </div>
             <div class="content-wrapper container">
+                <?php require_once 'pages/status_notif.php'; ?>
+
                 <?php
-
-
                 // Menampilkan konten berdasarkan page
                 switch ($page) {
                     case 'dashboard':
                         include 'pages/dashboard.php';
+                        break;
+                    case 'task':
+                        include 'pages/task.php';
                         break;
                     case 'statistik':
                         include 'pages/statistik.php';
                         break;
                     case 'registrasi':
                         include 'pages/registrasi_user.php';
+                        break;
+                    case 'notifications':
+                        include 'pages/notification.php';
                         break;
                     case 'profil':
                         include 'pages/profil.php';

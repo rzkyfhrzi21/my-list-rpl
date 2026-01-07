@@ -1,5 +1,5 @@
 <?php
-include 'koneksi.php';
+include 'config.php';
 
 /* ===============================
    SET WAKTU DASAR
@@ -31,64 +31,36 @@ if (!function_exists('getCount')) {
 }
 
 /* ===============================
-   USER STAT
+   STATISTIK TASK
 ================================ */
-$totalPengguna = getCount('users');
 
-$totalPenggunaBaru = getCount(
-    'users',
-    "MONTH(created_at) = '$bulan_sekarang' 
-     AND YEAR(created_at) = '$tahun_sekarang'"
+// Total task
+$totalTask = getCount('tasks', "id_user = '$sesi_id'");
+
+// Task selesai
+$totalSelesai = getCount(
+    'tasks',
+    "id_user = '$sesi_id' AND status = 'selesai'"
 );
 
-/* ===============================
-   VISITOR STAT
-================================ */
-$totalPengunjung = getCount('rekam_akses_web');
-
-$pengunjungHariIni = getCount(
-    'rekam_akses_web',
-    "tanggal_akses = '$tanggal_sekarang'"
+// Task belum selesai
+$totalBelum = getCount(
+    'tasks',
+    "id_user = '$sesi_id' AND status = 'belum'"
 );
 
-/* ===============================
-   DETEKSI STAT (INTI SISTEM)
-================================ */
-$totalDeteksi = getCount('hasil_deteksi');
-
-$deteksiHariIni = getCount(
-    'hasil_deteksi',
-    "DATE(created_at) = '$tanggal_sekarang'"
+// Deadline hari ini
+$deadlineHariIni = getCount(
+    'tasks',
+    "id_user = '$sesi_id' 
+     AND status = 'belum'
+     AND DATE(deadline) = CURDATE()"
 );
 
-/* ===============================
-   RATA-RATA CONFIDENCE
-================================ */
-$avgConfidence = 0;
-$sqlAvg = mysqli_query(
-    $koneksi,
-    "SELECT AVG(confidence) AS avg_conf FROM hasil_deteksi"
+// Deadline terlewat
+$deadlineLewat = getCount(
+    'tasks',
+    "id_user = '$sesi_id'
+     AND status = 'belum'
+     AND deadline < NOW()"
 );
-
-if ($sqlAvg) {
-    $row = mysqli_fetch_assoc($sqlAvg);
-    $avgConfidence = round((float) ($row['avg_conf'] ?? 0), 4);
-}
-
-/* ===============================
-   DISTRIBUSI PENYAKIT
-================================ */
-$distribusiPenyakit = [];
-
-$sqlDistribusi = mysqli_query(
-    $koneksi,
-    "SELECT label_penyakit, COUNT(*) AS total 
-     FROM hasil_deteksi 
-     GROUP BY label_penyakit"
-);
-
-if ($sqlDistribusi) {
-    while ($row = mysqli_fetch_assoc($sqlDistribusi)) {
-        $distribusiPenyakit[$row['label_penyakit']] = (int) $row['total'];
-    }
-}

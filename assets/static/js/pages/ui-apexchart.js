@@ -4,14 +4,14 @@ var lineOptions = {
   },
   series: [
     {
-      name: "ABG",
-      data: [100, 100, 100, 100, 49, 60, 70, 91, 125],
+      name: "sales",
+      data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
     },
   ],
   xaxis: {
-    categories: [19911, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
   },
-};
+}
 var candleOptions = {
   series: [
     {
@@ -294,7 +294,7 @@ var candleOptions = {
     type: "category",
     labels: {
       formatter: function (val) {
-        return dayjs(val).format("MMM DD HH:mm");
+        return dayjs(val).format("MMM DD HH:mm")
       },
     },
   },
@@ -303,7 +303,7 @@ var candleOptions = {
       enabled: true,
     },
   },
-};
+}
 
 var barOptions = {
   series: [
@@ -353,11 +353,11 @@ var barOptions = {
   tooltip: {
     y: {
       formatter: function (val) {
-        return "$ " + val + " thousands";
+        return "$ " + val + " thousands"
       },
     },
   },
-};
+}
 
 var radialGradientOptions = {
   series: [75],
@@ -411,7 +411,7 @@ var radialGradientOptions = {
         },
         value: {
           formatter: function (val) {
-            return parseInt(val);
+            return parseInt(val)
           },
           color: "#111",
           fontSize: "36px",
@@ -437,7 +437,7 @@ var radialGradientOptions = {
     lineCap: "round",
   },
   labels: ["Percent"],
-};
+}
 var areaOptions = {
   series: [
     {
@@ -476,7 +476,7 @@ var areaOptions = {
       format: "dd/MM/yy HH:mm",
     },
   },
-};
+}
 var radialBarOptions = {
   series: [44, 55, 67, 83],
   chart: {
@@ -497,25 +497,25 @@ var radialBarOptions = {
           label: "Total",
           formatter: function (w) {
             // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-            return 249;
+            return 249
           },
         },
       },
     },
   },
   labels: ["Apples", "Oranges", "Bananas", "Berries"],
-};
-var bar = new ApexCharts(document.querySelector("#bar"), barOptions);
-var line = new ApexCharts(document.querySelector("#line"), lineOptions);
-var candle = new ApexCharts(document.querySelector("#candle"), candleOptions);
+}
+var bar = new ApexCharts(document.querySelector("#bar"), barOptions)
+var line = new ApexCharts(document.querySelector("#line"), lineOptions)
+var candle = new ApexCharts(document.querySelector("#candle"), candleOptions)
 var radialGradient = new ApexCharts(
   document.querySelector("#radialGradient"),
   radialGradientOptions
-);
-var area = new ApexCharts(document.querySelector("#area"), areaOptions);
+)
+var area = new ApexCharts(document.querySelector("#area"), areaOptions)
 
-area.render();
-radialGradient.render();
-candle.render();
-bar.render();
-line.render();
+area.render()
+radialGradient.render()
+candle.render()
+bar.render()
+line.render()
