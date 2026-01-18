@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2026 at 02:43 AM
+-- Generation Time: Jan 07, 2026 at 03:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,9 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `user_id`, `task_id`, `title`, `message`, `is_read`, `created_at`, `updated_at`) VALUES
-(5, 2, 6, 'Kerjakan Task 1', 'Ayo Selesaikan sebelum waktu deadline', 0, '2026-01-07 01:26:58', '2026-01-07 01:26:58');
+(5, 2, 6, 'Kerjakan Task 1', 'Ayo Selesaikan sebelum waktu deadline', 1, '2026-01-07 01:26:58', '2026-01-07 02:02:47'),
+(6, 2, 10, '1111111', '11111111111111111111', 1, '2026-01-07 01:49:15', '2026-01-07 02:02:42'),
+(7, 2, 8, '111111111111111', '1111111111111111111', 1, '2026-01-07 02:09:19', '2026-01-07 02:14:19');
 
 -- --------------------------------------------------------
 
@@ -131,7 +133,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tasks`
@@ -143,7 +145,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
